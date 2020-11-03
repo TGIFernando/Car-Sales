@@ -24,16 +24,14 @@ export const theReducer = (state=initialState, action) => {
             return {
                 ...state,
                 additionalPrice: state.additionalPrice+action.price,
-                car: {...state.car, features: [...state.car.features, state.additionalFeatures.filter(feature=>{
-                    return feature.id === action.payload
-                })]}
+                car: {...state.car, features: [...state.car.features, state.additionalFeatures.filter((feature)=>feature.id === action.payload)]}
             }
-
         case deleteFeat:
             return{
                 ...state,
-                // additionalPrice: state.additionalPrice-action.price,
-                // car:{...state.car, features:[state.car.features.filter(feature=>!feature.id === bindActionCreators.payload)]}
+                additionalPrice: state.additionalPrice-=action.price,
+                car: {...state.car, features: state.car.features.filter((feature) => feature.id !== action.payload.id)}, 
+                
             }
         default:
             return state
